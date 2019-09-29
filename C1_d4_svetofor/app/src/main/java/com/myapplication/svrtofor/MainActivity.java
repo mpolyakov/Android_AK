@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 mConstrainedLayout.setBackgroundColor(getResources().getColor(R.color.yellowColor));
             }
         });
-}
+    }
 
     public void onRedButtonClick(View view) {
         mTextView.setText(R.string.red);
@@ -40,5 +40,6 @@ public class MainActivity extends AppCompatActivity {
     public void onGreenButtonClick(View view) {
         mTextView.setText(R.string.Green);
         mConstrainedLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.greenColor));
+
     }
 }

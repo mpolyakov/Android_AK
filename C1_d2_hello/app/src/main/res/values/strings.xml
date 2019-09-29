@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">hello_wrld</string>
+    <string name="app_name">second activity</string>
+    <string name="about_text">
+        У лукоморья дуб зелёный; \n
+        Златая цепь на дубе том: \n
+        И днём и ночью <b>кот учёный</b>\n
+        Всё ходит по цепи кругом; \n
+        Идёт <b>направо</b> - песнь заводит,\n
+        <b>Налево</b> - сказку говорит,\n
+        Там чудеса, там леший бродит,\n
+        Русалка на ветвях сидит!\n
+        Там на неведомых дорожках\n
+        Следы невидимых зверей! \n
+        Избушка там на курьих ножках \n
+        Стоит без окон, без дверей. \n
+        Там царь кощей над златом чахнет, \n
+        Там русский дух! Там Русью пахнет! \n
+    </string>
+    <string name="about_title">О программе</string>
+    <string name="title_activity_birthday_">Birthday_Activity</string>
 </resources>

@@ -1,11 +1,14 @@
-package com.myapplication.hello_wrld;
+package com.second_activity.second_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.myapplication.second_activity.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,12 +26,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+        startActivity(intent);
+    }
 
-        if (mSomethingEditText.getText().length() == 0) {
-            mHelloTextView.setText("Hello Everybody!");
-        } else {
-            mHelloTextView.setText("Hello " + mSomethingEditText.getText() + "!" );
-        }
+    public void onClickThirdPage(View view) {
+        Intent intent3 = new Intent(this, Birthday_Activity.class);
+        startActivity(intent3);
+    }
 
+    public void onClickToFourPage(View view) {
+        Intent intent4 = new Intent(this, Empty_Avtivity.class);
+        startActivity(intent4);
     }
 }
