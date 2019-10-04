@@ -19,7 +19,10 @@
         </activity>
         <activity
             android:name="com.second_activity.second_activity.AboutActivity"
-            android:label="@string/about_title" />
+            android:label="@string/about_title"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
+
+        </activity>
         <activity android:name="com.second_activity.second_activity.Empty_Avtivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
