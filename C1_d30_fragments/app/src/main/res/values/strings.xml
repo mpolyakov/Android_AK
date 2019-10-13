@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">about_fragments</string>
+    <string-array name="cats">
+        <item>Просто кот</item>
+        <item>Рыжик - рыжий кот</item>
+        <item>Барсик - гуляет по Барселоне</item>
+        <item>Мурзик читает Мурзилку</item>
+    </string-array>
 </resources>
