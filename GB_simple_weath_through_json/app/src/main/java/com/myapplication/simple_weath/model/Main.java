@@ -6,7 +6,7 @@ public class Main {
     private int humidity;
 
     public float getTemp() {
-        return temp;
+        return temp - 273;
     }
 
     public void setTemp(float temp) {
