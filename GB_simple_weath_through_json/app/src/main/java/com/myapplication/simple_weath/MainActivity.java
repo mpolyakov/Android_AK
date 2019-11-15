@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText city;
     private EditText press;
     private EditText temp;
+    private EditText speed;
     private Button button;
 
     @Override
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         city = findViewById(R.id.editCity);
         temp = findViewById(R.id.editTemp);
         press = findViewById(R.id.editPress);
+        speed = findViewById(R.id.editSpeed);
 
         button = findViewById(R.id.button);
         button.setOnClickListener(clickListener);
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                                     city.setText(weatherRequest.getName());
                                     temp.setText(String.format("%.2f", weatherRequest.getMain().getTemp()));
                                     press.setText(String.format("%d", weatherRequest.getMain().getPressure()));
+                                    speed.setText(String.format("%d", weatherRequest.getWind().getSpeed()));
                                 }
                             });
 

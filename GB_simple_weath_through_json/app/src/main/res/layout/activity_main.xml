@@ -92,11 +92,11 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Скорость ветра"
                 android:textSize="25sp"/>
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/editSpeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"

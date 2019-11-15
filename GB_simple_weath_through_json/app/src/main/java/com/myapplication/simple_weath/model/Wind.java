@@ -1,15 +1,15 @@
 package com.myapplication.simple_weath.model;
 
 public class Wind {
-    private int wind;
+    private int speed;
     private int deg;
 
-    public int getWind() {
-        return wind;
+    public int getSpeed() {
+        return speed;
     }
 
-    public void setWind(int wind) {
-        this.wind = wind;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public int getDeg() {
