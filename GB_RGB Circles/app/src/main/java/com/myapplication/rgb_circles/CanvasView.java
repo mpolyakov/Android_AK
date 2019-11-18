@@ -10,29 +10,20 @@ import androidx.annotation.Nullable;
 
 public class CanvasView extends View {
 
-    private MainCircle mainCircle;
-    private Paint paint;
+    private GameManager gameManager;
+
 
     public CanvasView(Context context) {
         super(context);
-        initMainCircle();
-        initPaint();
-    }
-
-    private void initPaint() {
-        paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL);
+        gameManager = new GameManager();
 
     }
 
-    private void initMainCircle() {
-        mainCircle = new MainCircle(500, 500);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawCircle(mainCircle.getX(), mainCircle.getY(), mainCircle.getRadius(), paint);
+        gameManager.onDraw(canvas);
+
     }
 }
