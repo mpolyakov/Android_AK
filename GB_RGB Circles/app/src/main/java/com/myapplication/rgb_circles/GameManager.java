@@ -7,8 +7,14 @@ public class GameManager {
 
     private MainCircle mainCircle;
     private Paint paint;
+    private CanvasView canvasView;
+    private static int width;
+    private static int height;
 
-    public GameManager() {
+    public GameManager(CanvasView canvasView, int w, int h) {
+        width = w;
+        height = h;
+        this.canvasView = canvasView;
         initMainCircle();
         initPaint();
     }
@@ -20,7 +26,7 @@ public class GameManager {
     }
 
     private void initMainCircle() {
-        mainCircle = new MainCircle(500, 500);
+        mainCircle = new MainCircle(width / 2, height / 2);
     }
 
     public void onDraw(Canvas canvas) {
