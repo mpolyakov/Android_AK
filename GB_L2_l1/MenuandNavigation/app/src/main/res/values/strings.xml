@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Menu and Navigation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Weather</string>
+    <string name="nav_header_subtitle">mikhail@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Настройки приложения</string>
+
+    <string name="menu_home">О разработчике</string>
+    <string name="menu_gallery">О погоде</string>
+    <string name="menu_slideshow">О приложении</string>
+    <string name="menu_tools">Настройки</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Форма обратной связи</string>
+    <string name="action_change_theme">Сменить тему</string>
+    <string name="action_about">О приложении</string>
+</resources>
