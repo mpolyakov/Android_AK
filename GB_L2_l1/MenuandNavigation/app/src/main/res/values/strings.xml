@@ -8,7 +8,7 @@
     <string name="action_settings">Настройки приложения</string>
 
     <string name="menu_home">О разработчике</string>
-    <string name="menu_gallery">О погоде</string>
+    <string name="menu_gallery">Погода</string>
     <string name="menu_slideshow">О приложении</string>
     <string name="menu_tools">Настройки</string>
     <string name="menu_share">Share</string>

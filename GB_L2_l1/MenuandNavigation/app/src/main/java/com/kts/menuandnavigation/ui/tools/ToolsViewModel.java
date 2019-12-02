@@ -10,7 +10,7 @@ public class ToolsViewModel extends ViewModel {
 
     public ToolsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tools fragment");
+        mText.setValue("Здесь вы можете изменить настройки приложения");
     }
 
     public LiveData<String> getText() {
