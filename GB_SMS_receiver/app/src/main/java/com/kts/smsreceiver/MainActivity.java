@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
         numberEditText = findViewById(R.id.editText);
         number = numberEditText.getText().toString();
 
-        String toNumberSms = "smsto:" + number;
-        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse(toNumberSms));
-        smsIntent.putExtra("sms_body", message);
-        startActivity(smsIntent);
+//        String toNumberSms = "smsto:" + number;
+//        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse(toNumberSms));
+//        smsIntent.putExtra("sms_body", message);
+//        startActivity(smsIntent);
+
+        SmsManager.getDefault().sendTextMessage(number, null, message, null, null); //немедленная отправка сообщения
 
     }
 }
