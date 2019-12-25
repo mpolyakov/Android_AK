@@ -14,6 +14,7 @@ import android.widget.EditText;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                        HttpsURLConnection urlConnection;
-                        urlConnection = (HttpsURLConnection) uri.openConnection();
+                        HttpURLConnection urlConnection;
+                        urlConnection = (HttpURLConnection) uri.openConnection();
                         urlConnection.setRequestMethod("GET");
 
                         urlConnection.setReadTimeout(10000);
