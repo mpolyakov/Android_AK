@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Web Browser</string>
-    <string name="address">https://yandex.ru</string>
+    <string name="address">http://10.65.26.10/web</string>
 </resources>

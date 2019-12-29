@@ -16,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://google.ru");
+//        webView.loadUrl("https://google.ru");
+
+        webView.loadUrl("http://operator:password@10.65.26.10/web/config");
 
     }
 }
