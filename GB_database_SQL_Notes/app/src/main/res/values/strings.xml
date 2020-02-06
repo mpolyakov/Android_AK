@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Notes_SQL</string>
+    <string name="title">title</string>
+    <string name="note">note</string>
+    <string name="menu_add">menu_add</string>
+    <string name="menu_clear">menu_clear</string>
+    <string name="menu_edit">menu_edit</string>
+    <string name="menu_delete">menu_delete</string>
+    <string name="alert_title_add">Title Add!</string>
+    <string name="alert_cancel">Cancel!</string>
+</resources>
