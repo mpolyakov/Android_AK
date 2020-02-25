@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         webView = findViewById(R.id.browse);
         WebSettings ws = webView.getSettings();
         ws.setJavaScriptEnabled(true);
-        ws.setAllowContentAccess(true);
-        ws.setAllowFileAccess(true);
-        ws.setBuiltInZoomControls(true);
-        ws.setJavaScriptCanOpenWindowsAutomatically(true);
-        ws.setLoadsImagesAutomatically(true);
-        ws.setAllowContentAccess(true);
+//        ws.setAllowContentAccess(true);
+//        ws.setAllowFileAccess(true);
+//        ws.setBuiltInZoomControls(true);
+//        ws.setJavaScriptCanOpenWindowsAutomatically(true);
+//        ws.setLoadsImagesAutomatically(true);
+//        ws.setAllowContentAccess(true);
 
 
         url = findViewById(R.id.url);
@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             try {
                 final URL uri = new URL(url.getText().toString());
+//                final URL uri = new URL("http://10.65.26.10");
                 final Handler handler = new Handler();
+
                 new Thread(new Runnable() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -73,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                             urlConnection.setRequestMethod("GET");
                             urlConnection.setConnectTimeout(10000);
                             urlConnection.connect();
-//                        urlConnection.setRequestMethod("GET");
-//                        urlConnection.setReadTimeout(10000);
 
                         BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                         final String result = in.lines().collect(Collectors.joining("\n"));
