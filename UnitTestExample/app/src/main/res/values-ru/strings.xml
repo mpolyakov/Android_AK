@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UnitTestExample</string>
+    <string name="stringGreetings">This is UnitTest testing App</string>
+    <string name="Hello">Хорошего дня</string>
+    <string name="Morning">Доброе утро</string>
+    <string name="Afternoon">Добрый день</string>
+    <string name="Evening">Добрый вечер</string>
+    <string name="Night">Доброй ночи</string>
+
+</resources>
