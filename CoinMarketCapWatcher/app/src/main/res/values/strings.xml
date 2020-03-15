@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoinMarketCapWatcher</string>
+    <string name="no_connection">Нет доступа к сети. Попробуйте позже</string>
 </resources>
