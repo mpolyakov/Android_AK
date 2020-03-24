@@ -2,15 +2,23 @@
     <string name="app_name">App_Site_C</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">3D news</string>
+    <string name="nav_header_subtitle">Daily Digital Digest</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_home">Главная</string>
+    <string name="menu_news_main">Главные новости</string>
+    <string name="menu_news_hard">Новости hardware</string>
+    <string name="menu_news_soft">Новости software</string>
+    <string name="menu_IT_finance">IT-финансы</string>
+    <string name="menu_offsyanka">Off-сянка</string>
+    <string name="check_connection_text">Интернет-соединение отсутствует</string>
+
+    <string name="website_url">https://3dnews.ru/</string>
+    <string name="website_mainNews">https://3dnews.ru/news/main</string>
+    <string name="website_hardNews">https://3dnews.ru/news</string>
+    <string name="website_softNews">https://3dnews.ru/software-news</string>
+    <string name="website_itFinance">https://3dnews.ru/it-finance</string>
+    <string name="website_OFFsyanka">https://3dnews.ru/offsyanka</string>
 </resources>
