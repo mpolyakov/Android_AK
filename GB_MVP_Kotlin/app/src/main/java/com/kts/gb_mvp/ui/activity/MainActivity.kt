@@ -8,11 +8,15 @@ import com.kts.gb_mvp.model.CountersModel
 import com.kts.gb_mvp.presenter.MainPresenter
 import com.kts.gb_mvp.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
+import moxy.MvpAppCompatActivity
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
-    val presenter = MainPresenter(this, CountersModel())
+    @InjectPresenter
+    lateinit var presenter : MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,28 +40,21 @@ class MainActivity : AppCompatActivity(), MainView {
         btn_counter2.setOnClickListener(listener)
         btn_counter3.setOnClickListener(listener)
 
-
-
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        //outState.putIntArray("counters", counters.toIntArray())
+    @ProvidePresenter
+    fun providePresenter() : MainPresenter = MainPresenter(CountersModel())
+
+
+    override fun setButtonOneText(text: String) {
+    btn_counter1.text = text
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-//        savedInstanceState.getIntArray("counters")?.toList()?.let {
-//            counters.clear()
-//            counters.addAll(it)
-//        }
+    override fun setButtonTwoText(text: String) {
+        btn_counter2.text = text
     }
 
-    override fun setButtonText(index: Int, text: String) {
-        when(index){
-            0 -> btn_counter1.text = text
-            1 -> btn_counter2.text = text
-            2 -> btn_counter3.text = text
-        }
+    override fun setButtonThreeText(text: String) {
+        btn_counter3.text = text
     }
 }
