@@ -11,5 +11,5 @@ class GithubRepositoriesRepo {
         GithubRepository("4", "name4", 400)
     )
 
-    fun getRepos() : List<GithubRepository> = repositories
+    fun getRepos() = repositories
 }
