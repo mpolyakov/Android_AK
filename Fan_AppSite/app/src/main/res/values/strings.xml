@@ -15,10 +15,11 @@
     <string name="menu_offsyanka">Off-сянка</string>
     <string name="check_connection_text">Интернет-соединение отсутствует</string>
 
-    <string name="website_url">https://www.cosmo.ru/</string>
+    <string name="website_url">https://3dnews.ru/</string>
     <string name="website_mainNews">https://3dnews.ru/news/main</string>
     <string name="website_hardNews">https://3dnews.ru/news</string>
     <string name="website_softNews">https://3dnews.ru/software-news</string>
     <string name="website_itFinance">https://3dnews.ru/it-finance</string>
     <string name="website_OFFsyanka">https://3dnews.ru/offsyanka</string>
+    <string name="domen_name">3dnews.ru</string>
 </resources>

@@ -8,22 +8,27 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var networkAvailable = false
 
 //    private lateinit var appBarConfiguration: AppBarConfiguration
@@ -36,6 +41,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         var url = getString(R.string.website_url)
+//        var urlFeedback = getString(R.string.website_urlFeedback)
+        val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
+
 
         mWebView = findViewById(R.id.webView)
         val webSettings = mWebView.settings
@@ -53,19 +66,44 @@ class MainActivity : AppCompatActivity() {
 
             setOnChildScrollUpCallback { parent, child -> mWebView.getScrollY() > 0 }
         }
-//
-//        webView.webViewClient = WebViewClient()
-//        webView.loadUrl(url)
+
 
         val fab : FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-        val drawerLayout : DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView : NavigationView = findViewById(R.id.nav_view)
-
+//        fab.setOnClickListener { loadWebsite(mWebView, urlFeedback, applicationContext)}
     }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_home -> {
+                val url = getString(R.string.website_url)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+            R.id.nav_main -> {
+                val url = getString(R.string.website_mainNews)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+            R.id.nav_hard -> {
+                val url = getString(R.string.website_hardNews)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+            R.id.nav_soft -> {
+                val url = getString(R.string.website_softNews)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+            R.id.nav_IT -> {
+                val url = getString(R.string.website_itFinance)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+            R.id.nav_offsyanka -> {
+                val url = getString(R.string.website_OFFsyanka)
+                loadWebsite(mWebView, url, applicationContext)
+            }
+        }
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+
 
     private fun loadWebsite(mWebView: WebView, url: String, context: Context){
         progressBar.visibility = View.VISIBLE
@@ -135,7 +173,7 @@ class MainActivity : AppCompatActivity() {
             networkAvailable = isNetworkAvailable(applicationContext)
 
             if (networkAvailable) {
-                if (Uri.parse(url).host == getString(R.string.website_url)) return false
+                if ((Uri.parse(url).host)!!.contains(getString(R.string.domen_name))) return false
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
                 onLoadComplete()
