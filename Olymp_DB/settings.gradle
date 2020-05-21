@@ -1,0 +1,2 @@
+rootProject.name='Olymp_DB'
+include ':app'
