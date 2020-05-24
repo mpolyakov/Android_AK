@@ -80,7 +80,9 @@ public class AddMemberActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save_member: return true;
+            case R.id.save_member:
+                insertMember();
+                return true;
             case R.id.delete_member: return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
