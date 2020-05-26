@@ -83,7 +83,22 @@ public class OlympusContentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+
+        SQLiteDatabase db = olympusDbOpenHelper.getWritableDatabase();
+
+        int match = uriMatcher.match(uri);
+        switch (match) {
+            case MEMBERS:
+                return db.delete(MemberEntry.TABLE_NAME, s, strings);
+
+            case MEMBER_ID:
+                s = MemberEntry._ID + "=?";
+                strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return db.delete(MemberEntry.TABLE_NAME, s, strings);
+
+            default:
+                throw new IllegalArgumentException("Can't delete this URI " + uri);
+        }
     }
 
     @Override
@@ -96,12 +111,12 @@ public class OlympusContentProvider extends ContentProvider {
                 return db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
 
             case MEMBER_ID:
-                selection = MemberEntry._ID + "=?";
-                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                s = MemberEntry._ID + "=?";
+                strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
 
             default:
-                throw new IllegalArgumentException("Can't query incorrect URI " + uri);
+                throw new IllegalArgumentException("Can't update this URI " + uri);
         }
 
     }
@@ -109,6 +124,18 @@ public class OlympusContentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(Uri uri) {
-        return null;
+
+        int match = uriMatcher.match(uri);
+        switch (match) {
+            case MEMBERS:
+                return MemberEntry.CONTENT_MULTIPLE_ITEMS;
+
+            case MEMBER_ID:
+                return MemberEntry.CONTENT_SINGLE_ITEM;
+
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+
     }
 }
