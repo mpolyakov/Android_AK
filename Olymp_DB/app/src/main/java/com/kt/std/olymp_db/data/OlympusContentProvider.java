@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 
 import com.kt.std.olymp_db.data.ClubOlympusContract.*;
 
+import java.lang.reflect.Member;
+
 public class OlympusContentProvider extends ContentProvider {
     OlympusDbOpenHelper olympusDbOpenHelper;
     private static final int MEMBERS = 111;
@@ -61,6 +63,27 @@ public class OlympusContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
+
+        String firstName = contentValues.getAsString(MemberEntry.COLUMN_FIRST_NAME);
+        if (firstName == null){
+            throw new IllegalArgumentException("You have to input first name");
+        }
+
+        String lastName = contentValues.getAsString(MemberEntry.COLUMN_LAST_NAME);
+        if (lastName == null){
+            throw new IllegalArgumentException("You have to input last name");
+        }
+
+        Integer gender = contentValues.getAsInteger(MemberEntry.COLUMN_GENDER);
+        if (gender == null || !(gender == MemberEntry.GENDER_UNKNOWN || gender == MemberEntry.GENDER_MALE || gender == MemberEntry.GENDER_FEMALE)){
+            throw new IllegalArgumentException("You have to input correct gender");
+        }
+
+        String sport = contentValues.getAsString(MemberEntry.COLUMN_SPORT);
+        if (sport == null){
+            throw new IllegalArgumentException("You have to input sport name");
+        }
+
         SQLiteDatabase db = olympusDbOpenHelper.getWritableDatabase();
 
         int match = uriMatcher.match(uri);
@@ -103,6 +126,36 @@ public class OlympusContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_FIRST_NAME)){
+            String firstName = contentValues.getAsString(MemberEntry.COLUMN_FIRST_NAME);
+            if (firstName == null){
+                throw new IllegalArgumentException("You have to input first name");
+            }
+        }
+
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_LAST_NAME)) {
+            String lastName = contentValues.getAsString(MemberEntry.COLUMN_LAST_NAME);
+            if (lastName == null) {
+                throw new IllegalArgumentException("You have to input last name");
+            }
+        }
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_GENDER)) {
+            Integer gender = contentValues.getAsInteger(MemberEntry.COLUMN_GENDER);
+            if (gender == null || !(gender == MemberEntry.GENDER_UNKNOWN || gender == MemberEntry.GENDER_MALE || gender == MemberEntry.GENDER_FEMALE)) {
+                throw new IllegalArgumentException("You have to input correct gender");
+            }
+        }
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_SPORT)) {
+            String sport = contentValues.getAsString(MemberEntry.COLUMN_SPORT);
+            if (sport == null) {
+                throw new IllegalArgumentException("You have to input sport name");
+            }
+        }
+
         SQLiteDatabase db = olympusDbOpenHelper.getWritableDatabase();
 
         int match = uriMatcher.match(uri);
