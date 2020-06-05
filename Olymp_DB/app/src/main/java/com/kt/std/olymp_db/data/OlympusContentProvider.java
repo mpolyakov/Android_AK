@@ -56,6 +56,8 @@ public class OlympusContentProvider extends ContentProvider {
                 Toast.makeText(getContext(), "Uncorrect URI", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't query incorrect URI " + uri);
         }
+
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -65,22 +67,22 @@ public class OlympusContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues contentValues) {
 
         String firstName = contentValues.getAsString(MemberEntry.COLUMN_FIRST_NAME);
-        if (firstName == null){
+        if (firstName == null) {
             throw new IllegalArgumentException("You have to input first name");
         }
 
         String lastName = contentValues.getAsString(MemberEntry.COLUMN_LAST_NAME);
-        if (lastName == null){
+        if (lastName == null) {
             throw new IllegalArgumentException("You have to input last name");
         }
 
         Integer gender = contentValues.getAsInteger(MemberEntry.COLUMN_GENDER);
-        if (gender == null || !(gender == MemberEntry.GENDER_UNKNOWN || gender == MemberEntry.GENDER_MALE || gender == MemberEntry.GENDER_FEMALE)){
+        if (gender == null || !(gender == MemberEntry.GENDER_UNKNOWN || gender == MemberEntry.GENDER_MALE || gender == MemberEntry.GENDER_FEMALE)) {
             throw new IllegalArgumentException("You have to input correct gender");
         }
 
         String sport = contentValues.getAsString(MemberEntry.COLUMN_SPORT);
-        if (sport == null){
+        if (sport == null) {
             throw new IllegalArgumentException("You have to input sport name");
         }
 
@@ -96,6 +98,7 @@ public class OlympusContentProvider extends ContentProvider {
                     return null;
                 }
 
+                getContext().getContentResolver().notifyChange(uri, null);
                 return ContentUris.withAppendedId(uri, id);
 
             default:
@@ -110,26 +113,34 @@ public class OlympusContentProvider extends ContentProvider {
         SQLiteDatabase db = olympusDbOpenHelper.getWritableDatabase();
 
         int match = uriMatcher.match(uri);
+        int rowsDeleted;
+
         switch (match) {
             case MEMBERS:
-                return db.delete(MemberEntry.TABLE_NAME, s, strings);
+                rowsDeleted = db.delete(MemberEntry.TABLE_NAME, s, strings);
+                break;
 
             case MEMBER_ID:
                 s = MemberEntry._ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return db.delete(MemberEntry.TABLE_NAME, s, strings);
+                rowsDeleted = db.delete(MemberEntry.TABLE_NAME, s, strings);
+                break;
 
             default:
                 throw new IllegalArgumentException("Can't delete this URI " + uri);
         }
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
 
-        if (contentValues.containsKey(MemberEntry.COLUMN_FIRST_NAME)){
+        if (contentValues.containsKey(MemberEntry.COLUMN_FIRST_NAME)) {
             String firstName = contentValues.getAsString(MemberEntry.COLUMN_FIRST_NAME);
-            if (firstName == null){
+            if (firstName == null) {
                 throw new IllegalArgumentException("You have to input first name");
             }
         }
@@ -159,19 +170,29 @@ public class OlympusContentProvider extends ContentProvider {
         SQLiteDatabase db = olympusDbOpenHelper.getWritableDatabase();
 
         int match = uriMatcher.match(uri);
+        int rowsUpdated;
+
         switch (match) {
             case MEMBERS:
-                return db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                rowsUpdated = db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+
+                break;
+
 
             case MEMBER_ID:
                 s = MemberEntry._ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                rowsUpdated = db.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+
+                break;
 
             default:
                 throw new IllegalArgumentException("Can't update this URI " + uri);
         }
-
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 
     @Nullable

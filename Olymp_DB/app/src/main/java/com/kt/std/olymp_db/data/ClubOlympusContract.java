@@ -25,8 +25,8 @@ public final class ClubOlympusContract {
         public static final String COLUMN_SPORT = "sport";
 
         public static final int GENDER_UNKNOWN = 0;
-        public static final int GENDER_MALE = 0;
-        public static final int GENDER_FEMALE = 0;
+        public static final int GENDER_MALE = 1;
+        public static final int GENDER_FEMALE = 2;
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_MEMBERS);
 
