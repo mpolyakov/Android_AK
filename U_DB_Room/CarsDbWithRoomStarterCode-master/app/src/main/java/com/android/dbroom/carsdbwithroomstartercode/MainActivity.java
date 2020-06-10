@@ -27,12 +27,9 @@ import Model.Car;
 public class MainActivity extends AppCompatActivity {
 
     private CarsAdapter carsAdapter;
-    private ArrayList<Car> cars = new ArrayList<>();
+    private ArrayList<Car> carArrayList = new ArrayList<>();
     private RecyclerView recyclerView;
-
-
     private CarsAppDatabase carsAppDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
-        carsAppDatabase = Room.databaseBuilder(getApplicationContext(), CarsAppDatabase.class, "CarsDB").allowMainThreadQueries().build();
+        carsAppDatabase = Room.databaseBuilder(getApplicationContext(), CarsAppDatabase.class, "CarsDB").build();
 
+        new GetAllCarsAsyncTask().execute();
 
-
-
-        carsAdapter = new CarsAdapter(this, cars, MainActivity.this);
+        carsAdapter = new CarsAdapter(this, carArrayList, MainActivity.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(carsAdapter);
-
 
         FloatingActionButton floatingActionButton =
                 (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -63,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
-
-
     }
 
     public void addAndEditCars(final boolean isUpdate, final Car car, final int position) {
@@ -89,20 +82,15 @@ public class MainActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton(isUpdate ? "Update" : "Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
-
                     }
                 })
                 .setNegativeButton(isUpdate ? "Delete" : "Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
-
                                 if (isUpdate) {
-
                                     deleteCar(car, position);
                                 } else {
-
                                     dialogBox.cancel();
-
                                 }
 
                             }
@@ -126,12 +114,9 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                 }
 
-
                 if (isUpdate && car != null) {
-
                     updateCar(nameEditText.getText().toString(), priceEditText.getText().toString(), position);
                 } else {
-
                     createCar(nameEditText.getText().toString(), priceEditText.getText().toString());
                 }
             }
@@ -139,49 +124,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deleteCar(Car car, int position) {
-
-        cars.remove(position);
-        carsAppDatabase.getCarDao().deleteCar(car);
-        carsAdapter.notifyDataSetChanged();
+        new DeleteCarAsyncTask().execute(car);
+        carArrayList.remove(position);
     }
 
     private void updateCar(String name, String price, int position) {
-
-        Car car = cars.get(position);
-
+        Car car = carArrayList.get(position);
         car.setName(name);
         car.setPrice(price);
-
-        carsAppDatabase.getCarDao().updateCar(car);
-
-        cars.set(position, car);
-
-        carsAdapter.notifyDataSetChanged();
-
-
+        new UpdateCarAsyncTask().execute(car);
+        carArrayList.set(position, car);
     }
 
     private void createCar(String name, String price) {
-
-        long id = carsAppDatabase.getCarDao().addCar(new Car(0, name, price));
-
-
-        Car car = carsAppDatabase.getCarDao().getCar(id);
-
-        if (car != null) {
-
-            cars.add(0, car);
-            carsAdapter.notifyDataSetChanged();
-
-        }
-
+        new CreateCarAsyncTask().execute(new Car(0, name, price));
     }
 
-    private class GetAllCarsAsyncTask extends AsyncTask<Void, Void, Void > {
+    private class GetAllCarsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            cars.addAll(carsAppDatabase.getCarDao().getAllCars());
+            carArrayList.addAll(carsAppDatabase.getCarDao().getAllCars());
             return null;
         }
 
@@ -189,7 +152,54 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             carsAdapter.notifyDataSetChanged();
+        }
+    }
 
+    private class CreateCarAsyncTask extends AsyncTask<Car, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Car... cars) {
+            long id = carsAppDatabase.getCarDao().addCar(cars[0]);
+            Car car = carsAppDatabase.getCarDao().getCar(id);
+
+            if (car != null) {
+                carArrayList.add(0, car);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            carsAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class UpdateCarAsyncTask extends AsyncTask<Car, Void, Void> {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            carsAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(Car... cars) {
+            carsAppDatabase.getCarDao().updateCar(cars[0]);
+            return null;
+        }
+    }
+
+    private class DeleteCarAsyncTask extends AsyncTask<Car, Void, Void> {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            carsAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected Void doInBackground(Car... cars) {
+            carsAppDatabase.getCarDao().deleteCar(cars[0]);
+            return null;
         }
     }
 }
