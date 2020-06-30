@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         public void onOkClick(View view) {
 
-            Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
-
+//            Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, OkActivity.class));
         }
 
         public void onCancelClick(View view) {
