@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kt.std.databindingdemo.databinding.ActivityMainBinding;
 
@@ -73,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         public void onCancelClick(View view) {
 
-            Toast.makeText(context, "Cancel", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Cancel", Toast.LENGTH_SHORT).show();
 
+            startActivity(new Intent(MainActivity.this, TwoWayActivity.class));
         }
     }
 }
