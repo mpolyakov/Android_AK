@@ -62,12 +62,18 @@ public abstract class MoviesDatabase extends RoomDatabase {
             movie1.setGenreId(1);
 
             Movie movie2 = new Movie();
-            movie1.setMovieName("Ken park");
-            movie1.setMovieDescription("About young people");
-            movie1.setGenreId(2);
+            movie2.setMovieName("Ken park");
+            movie2.setMovieDescription("About young people");
+            movie2.setGenreId(2);
+
+            Movie movie3 = new Movie();
+            movie3.setMovieName("fghfg boys");
+            movie3.setMovieDescription("fghhfghf h fghfh hgfhfgh fg");
+            movie3.setGenreId(1);
 
             movieDao.insert(movie1);
             movieDao.insert(movie2);
+            movieDao.insert(movie3);
 
             return null;
         }
