@@ -13,13 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="4dp"
-        android:padding="8dp">
+        android:layout_marginTop="32dp"
+        android:padding="32dp">
 
         <ImageView
             android:id="@+id/movieImageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="fitXY" />
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/titleTextView"

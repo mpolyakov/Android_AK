@@ -1,4 +1,4 @@
-package com.kt.std.mvvmretrofitmoviapp;
+package com.kt.std.mvvmretrofitmoviapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.kt.std.mvvmretrofitmoviapp.R;
 import com.kt.std.mvvmretrofitmoviapp.adapter.ResultAdapter;
 import com.kt.std.mvvmretrofitmoviapp.model.MovieApiResponce;
 import com.kt.std.mvvmretrofitmoviapp.model.Result;
