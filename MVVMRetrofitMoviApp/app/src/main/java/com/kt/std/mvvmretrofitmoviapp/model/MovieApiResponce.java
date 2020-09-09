@@ -1,14 +1,15 @@
 package com.kt.std.mvvmretrofitmoviapp.model;
 
 import java.util.List;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MovieApiResponce implements Parcelable
-{
+public class MovieApiResponce implements Parcelable {
 
     @SerializedName("page")
     @Expose
@@ -36,8 +37,7 @@ public class MovieApiResponce implements Parcelable
             return (new MovieApiResponce[size]);
         }
 
-    }
-            ;
+    };
 
     protected MovieApiResponce(Parcel in) {
         this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
