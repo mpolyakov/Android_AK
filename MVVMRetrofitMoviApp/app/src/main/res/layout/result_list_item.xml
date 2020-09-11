@@ -1,46 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
-    card_view:cardUseCompatPadding="true">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="result"
+            type="com.kt.std.mvvmretrofitmoviapp.model.Result" />
+
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:layout_marginTop="32dp"
-        android:padding="32dp">
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true">
 
-        <ImageView
-            android:id="@+id/movieImageView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerInside" />
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_marginTop="32dp"
+            android:padding="32dp">
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/movieImageView"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/movieImageView"
+                android:layout_width="match_parent"
+                bind:posterPath="@{result.posterPath}"
+                android:layout_height="200dp"
+                android:scaleType="centerInside" />
 
-        <TextView
-            android:id="@+id/popularityTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/titleTextView"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:textStyle="italic" />
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:text="@{result.originalTitle}"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/movieImageView"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/popularityTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{Double.toString(result.popularity)}"
+                android:layout_below="@+id/titleTextView"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+        </RelativeLayout>
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+</layout>
