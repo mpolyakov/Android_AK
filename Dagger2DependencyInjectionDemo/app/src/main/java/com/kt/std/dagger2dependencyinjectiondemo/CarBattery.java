@@ -2,9 +2,8 @@ package com.kt.std.dagger2dependencyinjectiondemo;
 
 import javax.inject.Inject;
 
-public class CarBattery {
+public interface CarBattery {
 
-    @Inject
-    public CarBattery() {
-    }
+    void logBatteryType();
+
 }
