@@ -8,6 +8,7 @@ public class Car {
     private CarEngine carEngine;
     private CarChassis carChassis;
     private CarBattery carBattery;
+    private static final String TAG = "carTag";
 
     @Inject
     public Car(CarEngine carEngine, CarChassis carChassis, CarBattery carBattery) {
@@ -16,11 +17,11 @@ public class Car {
         this.carBattery = carBattery;
     }
 
-    public void setCarChassis(CarChassis carChassis) {
-        this.carChassis = carChassis;
-    }
+//    public void setCarChassis(CarChassis carChassis) {
+//        this.carChassis = carChassis;
+//    }
 
     public void move(){
-        Log.d("car move()", "Car is moving");
+        Log.d("carTag", "Car is moving");
     }
 }
