@@ -1,4 +1,4 @@
-package com.kt.std.gb_mvp_moxy;
+package com.kt.std.gb_mvp_moxy.mvp.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,11 @@ public class Model {
         list.add(0);
     }
 
-    int getElementValueAtIndex(int index){
+    public int getElementValueAtIndex(int index){
         return list.get(index);
     }
 
-    void setElementValueAtIndex(int index, int value){
+    public void setElementValueAtIndex(int index, int value){
         list.set(index, value);
     }
 
