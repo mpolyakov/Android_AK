@@ -5,11 +5,11 @@ import com.kt.std.gb_mvp_moxy.mvp.model.entity.Country;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataSource {
+public class StubDataSource {
 
         private List<Country> countries;
 
-        public DataSource() {
+        public StubDataSource() {
             countries = new ArrayList<>();
             countries.add(new Country("Afghanistan", "AF"));
             countries.add(new Country("Г…land Islands", "AX"));

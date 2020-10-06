@@ -1,20 +1,19 @@
 package com.kt.std.gb_mvp_moxy.mvp.model.repo;
 
-import com.kt.std.gb_mvp_moxy.mvp.model.api.DataSource;
+import com.kt.std.gb_mvp_moxy.mvp.model.api.StubDataSource;
 import com.kt.std.gb_mvp_moxy.mvp.model.entity.Country;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class CountriesRepo {
-    private DataSource dataSource;
+    private StubDataSource dataSource;
 
     public CountriesRepo() {
-        this.dataSource = new DataSource();
+        this.dataSource = new StubDataSource();
     }
 
     public Single<List<Country>> getCountries(){

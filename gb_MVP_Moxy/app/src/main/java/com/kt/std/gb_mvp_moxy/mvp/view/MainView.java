@@ -14,4 +14,7 @@ public interface MainView extends MvpView {
 
     void showLoading();
     void hideLoading();
+
+    void setUsername(String username);
+    void loadImage(String url);
 }

@@ -1,8 +1,12 @@
 package com.kt.std.gb_mvp_moxy.ui.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
+
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,16 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.kt.std.gb_mvp_moxy.R;
+import com.kt.std.gb_mvp_moxy.mvp.model.image.IImageLoader;
 import com.kt.std.gb_mvp_moxy.mvp.presenter.MainPresenter;
 import com.kt.std.gb_mvp_moxy.mvp.view.MainView;
-import com.kt.std.gb_mvp_moxy.R;
 import com.kt.std.gb_mvp_moxy.ui.adapter.CountriesRvAdapter;
+import com.kt.std.gb_mvp_moxy.ui.image.PicassoImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+
 public class MainActivity extends MvpAppCompatActivity implements MainView {
+
     @InjectPresenter
     MainPresenter presenter;
 
@@ -30,8 +38,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @BindView(R.id.rl_loading)
     RelativeLayout loadingRelativeLayout;
 
+    @BindView(R.id.tv_username)
+    TextView usernameTextView;
+
+    @BindView(R.id.iv_avatar)
+    ImageView avatarImageView;
 
     CountriesRvAdapter adapter;
+
+    IImageLoader<ImageView> imageLoader = new PicassoImageLoader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,4 +88,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         loadingRelativeLayout.setVisibility(View.GONE);
     }
 
+    @Override
+    public void setUsername(String username) {
+        usernameTextView.setText(username);
+    }
+
+    @Override
+    public void loadImage(String url) {
+        imageLoader.loadInto(url, avatarImageView);
+    }
 }
+
+

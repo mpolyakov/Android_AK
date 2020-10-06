@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -23,14 +22,13 @@ public class CountriesRvAdapter extends RecyclerView.Adapter<CountriesRvAdapter.
         this.presenter = presenter;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_country, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.pos = position;
         presenter.bind(holder);
         RxView.clicks(holder.itemView).map(o -> holder).subscribe(presenter.getClickSubject());
@@ -41,7 +39,6 @@ public class CountriesRvAdapter extends RecyclerView.Adapter<CountriesRvAdapter.
         return presenter.getCount();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements CountryRowView {
         int pos = 0;
 
@@ -51,7 +48,7 @@ public class CountriesRvAdapter extends RecyclerView.Adapter<CountriesRvAdapter.
         TextView codeTextView;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
