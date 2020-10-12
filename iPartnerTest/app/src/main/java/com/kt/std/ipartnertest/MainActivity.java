@@ -30,13 +30,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSession();
-//        getNotes();
+        getNotes();
     }
 
     private void getSession() {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody requestBody = RequestBody.create(mediaType, "a=new_session");
-//        Log.d("resultNotes", requestBody.toString());
 
         INotesSource notesSource = ApiHolder.getApi();
         Call<SessionResponse> call = notesSource.getSession(requestBody);
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SessionResponse> call, Response<SessionResponse> response) {
                 SessionResponse sessionResponse = response.body();
-//                Log.d("resultNotes", sessionResponse.toString());
+
                 session = sessionResponse.getData().getSession();
                 Log.d("resultNotes", session);
             }
@@ -58,34 +57,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private void getNotes() {
-//
-//        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-//        RequestBody body = RequestBody.create(mediaType, "a=get_entries&session=pbkd2rcB43ctkhTHB9");
-//        Log.d("resultNotes", body.toString());
-//
-//        INotesSource notesSource = ApiHolder.getApi();
+    private void getNotes() {
 
-//        Call<ListNotes> call = notesSource.getListNotes(body);
-//        call.enqueue(new Callback<ListNotes>() {
-//            @Override
-//            public void onResponse(Call<ListNotes> call, Response<ListNotes> response) {
-//                ListNotes listNotes = response.body();
-//                if (listNotes != null && listNotes.getData() != null){
-//                    listNotesArrayList = (ArrayList<Note>) listNotes.getData().get(1);
-//                }
-//
-//                for (Note note : listNotesArrayList){
-//                    Log.d("resultNotes", note.toString());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ListNotes> call, Throwable t) {
-//                Log.d("resultNotes", t.getMessage());
-//
-//            }
-//        });}
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, "a=get_entries&session=pbkd2rcB43ctkhTHB9");
+
+        INotesSource notesSource = ApiHolder.getApi();
+
+        Call<ListNotes> call = notesSource.getListNotes(body);
+        call.enqueue(new Callback<ListNotes>() {
+            @Override
+            public void onResponse(Call<ListNotes> call, Response<ListNotes> response) {
+                ListNotes listNotes = response.body();
+                if (listNotes != null && listNotes.getData() != null) {
+                    listNotesArrayList = (ArrayList<Note>) listNotes.getData().get(0);
+                }
+
+                for (Note note : listNotesArrayList) {
+                    Log.d("resultNotes", note.getBody());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ListNotes> call, Throwable t) {
+                Log.d("resultNotes", t.getMessage());
+
+            }
+        });
+    }
 
 }

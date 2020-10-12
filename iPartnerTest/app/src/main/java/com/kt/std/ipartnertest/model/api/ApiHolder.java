@@ -23,6 +23,7 @@ public class ApiHolder {
 
     private ApiHolder(){
 //        Gson gson = new GsonBuilder()
+//                .setLenient()
 //                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
 //                .excludeFieldsWithoutExposeAnnotation()
 //                .create();
