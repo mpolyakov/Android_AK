@@ -1,6 +1,5 @@
 package com.kt.std.ipartnertest.model.api;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +17,7 @@ public class ApiHolder {
         return instance;
     }
 
-    private INotesSource api;
+    private IRetrofitInstance api;
 
 
     private ApiHolder(){
@@ -34,12 +33,13 @@ public class ApiHolder {
 
         api = new Retrofit.Builder()
                 .baseUrl("https://bnet.i-partner.ru")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
-                .create(INotesSource.class);
+                .create(IRetrofitInstance.class);
     }
 
-    public static INotesSource getApi(){
+    public static IRetrofitInstance getApi(){
         return getInstance().api;
     }
 }
