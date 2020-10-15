@@ -17,7 +17,7 @@ public interface IRetrofitInstance {
                 ,"Content-Type: application/x-www-form-urlencoded"
         })
         @POST("/testAPI/")
-        Call<SessionResponse> getSession(@Body RequestBody body);
+        Single<SessionResponse> getSession(@Body RequestBody body);
 
 
 
