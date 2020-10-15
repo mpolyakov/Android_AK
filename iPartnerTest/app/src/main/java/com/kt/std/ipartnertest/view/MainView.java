@@ -13,4 +13,5 @@ public interface MainView extends MvpView{
     void updateList();
     void showLoading();
     void hideLoading();
+    void saveSession(String session);
 }

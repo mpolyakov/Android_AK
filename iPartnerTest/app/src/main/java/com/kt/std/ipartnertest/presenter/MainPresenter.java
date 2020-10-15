@@ -50,7 +50,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
     private NotesRepo notesRepo;
     private SessionRepo sessionRepo;
     private Scheduler mainThreadScheduler;
-
+    private String session;
     private NotesListPresenter notesListPresenter;
 
     public MainPresenter(Scheduler scheduler) {
@@ -58,6 +58,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         this.notesRepo = new NotesRepo();
         this.notesListPresenter = new NotesListPresenter();
         this.sessionRepo = new SessionRepo();
+        this.session = null;
 
     }
 
@@ -97,7 +98,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
                 for (Note note : listNotesArrayList) {
                     Log.d("resultNotes", note.getBody());
-                    getViewState().showMessage(note.getBody());
+//                    getViewState().showMessage(note.getBody());
                 }
             }
         }, new Consumer<Throwable>() {
@@ -116,7 +117,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
         sessionRepo.getSession(requestBody).observeOn(mainThreadScheduler).subscribe(new Consumer<SessionResponse>() {
             @Override
             public void accept(SessionResponse sessionResponse) throws Exception {
-                String session = sessionResponse.getData().getSession();
+                session = sessionResponse.getData().getSession();
+                MainPresenter.this.getViewState().showMessage(session);
+                MainPresenter.this.getViewState().saveSession(session);
                 Log.d("resultNotes", session);
             }
         }, new Consumer<Throwable>() {
@@ -126,6 +129,5 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 MainPresenter.this.getViewState().showMessage(throwable.getMessage());
             }
         });
-
     }
 }

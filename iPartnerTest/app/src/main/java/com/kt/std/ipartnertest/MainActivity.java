@@ -1,5 +1,7 @@
 package com.kt.std.ipartnertest;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,15 +11,9 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kt.std.ipartnertest.model.api.ApiHolder;
-import com.kt.std.ipartnertest.model.api.IRetrofitInstance;
-import com.kt.std.ipartnertest.model.entity.Note;
-import com.kt.std.ipartnertest.model.entity.SessionResponse;
 import com.kt.std.ipartnertest.presenter.MainPresenter;
 import com.kt.std.ipartnertest.ui.NotesRVAdapter;
 import com.kt.std.ipartnertest.view.MainView;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,15 +23,18 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     public RequestBody requestBody;
     public MediaType mediaType;
     NotesRVAdapter adapter;
+    private String session;
+    public static final String APP_PREFERENCES = "app_settings";
+    public static final String APP_PREFERENCES_SESSION_ID = "session_id";
+    SharedPreferences mSettings;
+
+    String sessionFromPresenter;
 
     @InjectPresenter
     MainPresenter presenter;
@@ -52,6 +51,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     @ProvidePresenter
@@ -61,11 +61,38 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void init() {
+        if (mSettings.contains(APP_PREFERENCES_SESSION_ID)) {
+            session = mSettings.getString(APP_PREFERENCES_SESSION_ID, "");
+        } else {
+            getSession();
+        }
+        getNotes(session);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new NotesRVAdapter(presenter.getNotesListPresenter());
         recyclerView.setAdapter(adapter);
-        getNotes();
-        getSession();
+    }
+
+    private void getSession() {
+        presenter.loadSession(getRequestBody("a=new_session"));
+    }
+
+    @Override
+    public void saveSession(String sessionId) {
+        Log.d("resultNotes!", sessionId);
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putString(APP_PREFERENCES_SESSION_ID, session);
+        editor.apply();
+    }
+
+    private void getNotes(String session) {
+        presenter.loadNotes(getRequestBody("a=get_entries&session=" + session));
+    }
+
+    private RequestBody getRequestBody(String params) {
+        mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        requestBody = RequestBody.create(mediaType, params);
+        return requestBody;
     }
 
     @Override
@@ -87,21 +114,5 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     public void hideLoading() {
         loadingRelativeLayout.setVisibility(View.GONE);
     }
-
-
-    private void getSession() {
-        presenter.loadSession(getRequestBody("a=new_session"));
-    }
-
-    private void getNotes() {
-        presenter.loadNotes(getRequestBody("a=get_entries&session=pbkd2rcB43ctkhTHB9"));
-    }
-
-    private RequestBody getRequestBody(String params) {
-        mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        requestBody = RequestBody.create(mediaType, params);
-        return requestBody;
-    }
-
 
 }
