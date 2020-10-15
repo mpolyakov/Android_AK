@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">I Partner Test</string>
+
+    <string name="cancel">Отменить</string>
+    <string name="save">Сохранить</string>
+    <string name="type">Начинайте вводить…</string>
 </resources>

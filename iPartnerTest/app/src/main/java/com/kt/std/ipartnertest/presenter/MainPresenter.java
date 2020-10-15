@@ -120,7 +120,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 session = sessionResponse.getData().getSession();
                 MainPresenter.this.getViewState().showMessage(session);
                 MainPresenter.this.getViewState().saveSession(session);
-                Log.d("resultNotes", session);
+                Log.d("rrrFromPresenter", session);
             }
         }, new Consumer<Throwable>() {
             @Override

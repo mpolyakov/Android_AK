@@ -1,18 +1,24 @@
-package com.kt.std.ipartnertest;
+package com.kt.std.ipartnertest.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kt.std.ipartnertest.R;
+import com.kt.std.ipartnertest.model.repo.RequestBodyRepo;
 import com.kt.std.ipartnertest.presenter.MainPresenter;
-import com.kt.std.ipartnertest.ui.NotesRVAdapter;
+import com.kt.std.ipartnertest.ui.adapter.NotesRVAdapter;
 import com.kt.std.ipartnertest.view.MainView;
 
 import butterknife.BindView;
@@ -32,9 +38,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     private String session;
     public static final String APP_PREFERENCES = "app_settings";
     public static final String APP_PREFERENCES_SESSION_ID = "session_id";
-    SharedPreferences mSettings;
-
-    String sessionFromPresenter;
+    public static SharedPreferences mSettings;
 
     @InjectPresenter
     MainPresenter presenter;
@@ -51,7 +55,20 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        if (mSettings.contains(APP_PREFERENCES_SESSION_ID)) {
+            session = mSettings.getString(APP_PREFERENCES_SESSION_ID, "");
+            Log.d("rrrFromInit()", session);
+            Toast.makeText(this, session, Toast.LENGTH_SHORT).show();
+        } else {
+            getSession();
+        }
+        getNotes(session);
     }
 
     @ProvidePresenter
@@ -61,13 +78,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void init() {
-        if (mSettings.contains(APP_PREFERENCES_SESSION_ID)) {
-            session = mSettings.getString(APP_PREFERENCES_SESSION_ID, "");
-        } else {
-            getSession();
-        }
-        getNotes(session);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new NotesRVAdapter(presenter.getNotesListPresenter());
         recyclerView.setAdapter(adapter);
@@ -79,9 +89,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void saveSession(String sessionId) {
-        Log.d("resultNotes!", sessionId);
+//        Log.d("rrrFromSaveSession()", sessionId);
         SharedPreferences.Editor editor = mSettings.edit();
-        editor.putString(APP_PREFERENCES_SESSION_ID, session);
+        editor.putString(APP_PREFERENCES_SESSION_ID, sessionId);
         editor.apply();
     }
 
@@ -115,4 +125,42 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         loadingRelativeLayout.setVisibility(View.GONE);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_create:
+                Intent intent = new Intent(this, NoteCreateActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

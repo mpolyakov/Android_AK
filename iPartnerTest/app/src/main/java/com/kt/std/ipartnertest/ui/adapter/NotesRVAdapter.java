@@ -1,4 +1,4 @@
-package com.kt.std.ipartnertest.ui;
+package com.kt.std.ipartnertest.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +64,7 @@ public class NotesRVAdapter extends RecyclerView.Adapter<NotesRVAdapter.ViewHold
 
         @Override
         public void setBody(String body) {
+            body = body.substring(0, Math.min(body.length(), 200));
             bodyTextView.setText(body);
         }
 
