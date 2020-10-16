@@ -1,6 +1,8 @@
 package com.kt.std.ipartnertest.ui.activity;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +42,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     public static final String APP_PREFERENCES = "app_settings";
     public static final String APP_PREFERENCES_SESSION_ID = "session_id";
     public static SharedPreferences mSettings;
+    Dialog noResponseProgressDialog;
 
     @InjectPresenter
     MainPresenter presenter;
@@ -61,14 +65,18 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     protected void onResume() {
         super.onResume();
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        checkSessionLoadNotes();
+    }
+
+    private void checkSessionLoadNotes() {
         if (mSettings.contains(APP_PREFERENCES_SESSION_ID)) {
             session = mSettings.getString(APP_PREFERENCES_SESSION_ID, "");
             Log.d("rrrFromInit()", session);
             Toast.makeText(this, session, Toast.LENGTH_SHORT).show();
         } else {
-            getSession();
+            presenter.loadSession(getRequestBody("a=new_session"));
         }
-        getNotes(session);
+        presenter.loadNotes(getRequestBody("a=get_entries&session=" + session));
     }
 
     @ProvidePresenter
@@ -83,20 +91,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         recyclerView.setAdapter(adapter);
     }
 
-    private void getSession() {
-        presenter.loadSession(getRequestBody("a=new_session"));
-    }
-
     @Override
     public void saveSession(String sessionId) {
 //        Log.d("rrrFromSaveSession()", sessionId);
         SharedPreferences.Editor editor = mSettings.edit();
         editor.putString(APP_PREFERENCES_SESSION_ID, sessionId);
         editor.apply();
-    }
-
-    private void getNotes(String session) {
-        presenter.loadNotes(getRequestBody("a=get_entries&session=" + session));
     }
 
     private RequestBody getRequestBody(String params) {
@@ -140,6 +140,28 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                 startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showNoResponseDialog() {
+        if (noResponseProgressDialog == null) {
+            noResponseProgressDialog = new AlertDialog.Builder(this)
+                    .setPositiveButton(R.string.refresh, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            checkSessionLoadNotes();
+                        }
+                    })
+                    .setNegativeButton(R.string.okbutton, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            noResponseProgressDialog.dismiss();
+                        }
+                    })
+                    .setMessage(R.string.dialog_message)
+                    .create();
+        }
+        noResponseProgressDialog.show();
     }
 }
 

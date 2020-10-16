@@ -4,4 +4,7 @@
     <string name="cancel">Отменить</string>
     <string name="save">Сохранить</string>
     <string name="type">Начинайте вводить…</string>
+    <string name="okbutton">Ok</string>
+    <string name="refresh">Обновить данные</string>
+    <string name="dialog_message">Сервер недоступен. Проверьте соединение с сетью</string>
 </resources>

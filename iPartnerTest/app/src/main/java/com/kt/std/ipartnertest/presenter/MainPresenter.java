@@ -104,8 +104,10 @@ public class MainPresenter extends MvpPresenter<MainView> {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                MainPresenter.this.getViewState().showNoResponseDialog();
                 MainPresenter.this.getViewState().hideLoading();
                 MainPresenter.this.getViewState().showMessage(throwable.getMessage());
+
             }
         });
 
@@ -125,6 +127,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                MainPresenter.this.getViewState().showNoResponseDialog();
                 MainPresenter.this.getViewState().hideLoading();
                 MainPresenter.this.getViewState().showMessage(throwable.getMessage());
             }
