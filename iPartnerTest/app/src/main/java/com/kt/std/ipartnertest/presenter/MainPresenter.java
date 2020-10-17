@@ -3,11 +3,13 @@ package com.kt.std.ipartnertest.presenter;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.kt.std.ipartnertest.model.DateFormatter;
 import com.kt.std.ipartnertest.model.entity.Note;
 import com.kt.std.ipartnertest.model.entity.ListNotes;
 import com.kt.std.ipartnertest.model.entity.SessionResponse;
 import com.kt.std.ipartnertest.model.repo.NotesRepo;
 import com.kt.std.ipartnertest.model.repo.SessionRepo;
+import com.kt.std.ipartnertest.ui.format.DateFormatterImpl;
 import com.kt.std.ipartnertest.view.NoteRowView;
 import com.kt.std.ipartnertest.view.MainView;
 
@@ -33,7 +35,10 @@ public class MainPresenter extends MvpPresenter<MainView> {
             Note note = noteArrayList.get(view.getPos());
             view.setBody(note.getBody());
             view.setDa(note.getDa());
-            view.setDm(note.getDm());
+            if (!note.getDa().equals(note.getDm())){
+                view.setDm(note.getDm());
+            }
+
         }
 
         @Override
@@ -60,6 +65,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
         this.sessionRepo = new SessionRepo();
         this.session = null;
 
+
     }
 
     @SuppressLint("CheckResult")
@@ -73,6 +79,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
             public void accept(NoteRowView noteRowView) throws Exception {
                 Note note = notesListPresenter.noteArrayList.get(noteRowView.getPos());
                 MainPresenter.this.getViewState().showMessage(note.getBody() + " " + note.getDm());
+                MainPresenter.this.getViewState().openNote(note.getBody());
             }
         });
     }

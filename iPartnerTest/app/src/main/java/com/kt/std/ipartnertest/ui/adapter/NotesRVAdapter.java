@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.kt.std.ipartnertest.R;
+import com.kt.std.ipartnertest.model.DateFormatter;
 import com.kt.std.ipartnertest.presenter.INoteListPresenter;
+import com.kt.std.ipartnertest.ui.format.DateFormatterImpl;
 import com.kt.std.ipartnertest.view.NoteRowView;
 
 import butterknife.BindView;
@@ -43,6 +45,7 @@ public class NotesRVAdapter extends RecyclerView.Adapter<NotesRVAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements NoteRowView {
         int pos = 0;
+        private DateFormatter dateFormatter;
 
         @BindView(R.id.tv_body)
         TextView bodyTextView;
@@ -54,6 +57,7 @@ public class NotesRVAdapter extends RecyclerView.Adapter<NotesRVAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
+            this.dateFormatter = new DateFormatterImpl();
             ButterKnife.bind(this, itemView);
         }
 
@@ -70,12 +74,12 @@ public class NotesRVAdapter extends RecyclerView.Adapter<NotesRVAdapter.ViewHold
 
         @Override
         public void setDa(String da) {
-            daTextView.setText("Created on: " + da);
+            daTextView.setText("Created on: " + dateFormatter.fullDate(da));
         }
 
         @Override
         public void setDm(String dm) {
-            dmTextView.setText("Modified on: " + dm);
+            dmTextView.setText("Modified on: " + dateFormatter.fullDate(dm));
         }
     }
 }
