@@ -16,4 +16,6 @@ public interface MainView extends MvpView{
     void saveSession(String session);
 
     void showNoResponseDialog();
+
+    void openNote(String body);
 }

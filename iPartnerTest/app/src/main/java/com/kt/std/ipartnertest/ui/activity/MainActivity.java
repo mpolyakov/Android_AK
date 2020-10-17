@@ -163,6 +163,13 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         }
         noResponseProgressDialog.show();
     }
+
+    @Override
+    public void openNote(String body) {
+        Intent intent = new Intent(MainActivity.this, NoteReadActivity.class);
+        intent.putExtra("NOTE_BODY", body);
+        startActivity(intent);
+    }
 }
 
 
