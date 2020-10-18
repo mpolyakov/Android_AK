@@ -19,14 +19,7 @@ public class ApiHolder {
 
     private IRetrofitInstance api;
 
-
     private ApiHolder(){
-//        Gson gson = new GsonBuilder()
-//                .setLenient()
-//                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-//                .excludeFieldsWithoutExposeAnnotation()
-//                .create();
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();

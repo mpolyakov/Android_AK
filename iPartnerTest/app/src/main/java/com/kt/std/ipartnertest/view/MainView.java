@@ -2,7 +2,6 @@ package com.kt.std.ipartnertest.view;
 
 
 import moxy.MvpView;
-import moxy.viewstate.strategy.AddToEndSingleStrategy;
 import moxy.viewstate.strategy.OneExecutionStateStrategy;
 import moxy.viewstate.strategy.StateStrategyType;
 

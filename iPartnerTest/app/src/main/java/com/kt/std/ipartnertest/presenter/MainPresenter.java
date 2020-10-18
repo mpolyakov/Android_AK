@@ -1,20 +1,19 @@
 package com.kt.std.ipartnertest.presenter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
-import com.kt.std.ipartnertest.model.DateFormatter;
 import com.kt.std.ipartnertest.model.entity.Note;
 import com.kt.std.ipartnertest.model.entity.ListNotes;
 import com.kt.std.ipartnertest.model.entity.SessionResponse;
 import com.kt.std.ipartnertest.model.repo.NotesRepo;
 import com.kt.std.ipartnertest.model.repo.SessionRepo;
-import com.kt.std.ipartnertest.ui.format.DateFormatterImpl;
 import com.kt.std.ipartnertest.view.NoteRowView;
 import com.kt.std.ipartnertest.view.MainView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Consumer;
@@ -26,7 +25,7 @@ import okhttp3.RequestBody;
 @InjectViewState
 public class MainPresenter extends MvpPresenter<MainView> {
 
-    class NotesListPresenter implements INoteListPresenter {
+    public static class NotesListPresenter implements INoteListPresenter {
         PublishSubject<NoteRowView> clickSubject = PublishSubject.create();
         List<Note> noteArrayList = new ArrayList<>();
 
@@ -35,10 +34,9 @@ public class MainPresenter extends MvpPresenter<MainView> {
             Note note = noteArrayList.get(view.getPos());
             view.setBody(note.getBody());
             view.setDa(note.getDa());
-            if (!note.getDa().equals(note.getDm())){
+            if (!note.getDa().equals(note.getDm())) {
                 view.setDm(note.getDm());
             }
-
         }
 
         @Override
@@ -52,20 +50,17 @@ public class MainPresenter extends MvpPresenter<MainView> {
         }
     }
 
-    private NotesRepo notesRepo;
-    private SessionRepo sessionRepo;
+    @Inject
+    NotesRepo notesRepo;
+    @Inject
+    SessionRepo sessionRepo;
     private Scheduler mainThreadScheduler;
-    private String session;
-    private NotesListPresenter notesListPresenter;
+    private String session = null;
+    @Inject
+    NotesListPresenter notesListPresenter;
 
     public MainPresenter(Scheduler scheduler) {
         this.mainThreadScheduler = scheduler;
-        this.notesRepo = new NotesRepo();
-        this.notesListPresenter = new NotesListPresenter();
-        this.sessionRepo = new SessionRepo();
-        this.session = null;
-
-
     }
 
     @SuppressLint("CheckResult")
@@ -78,7 +73,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
             @Override
             public void accept(NoteRowView noteRowView) throws Exception {
                 Note note = notesListPresenter.noteArrayList.get(noteRowView.getPos());
-                MainPresenter.this.getViewState().showMessage(note.getBody() + " " + note.getDm());
                 MainPresenter.this.getViewState().openNote(note.getBody());
             }
         });
@@ -103,10 +97,6 @@ public class MainPresenter extends MvpPresenter<MainView> {
                 notesListPresenter.noteArrayList.addAll(listNotesArrayList);
                 MainPresenter.this.getViewState().updateList();
 
-                for (Note note : listNotesArrayList) {
-                    Log.d("resultNotes", note.getBody());
-//                    getViewState().showMessage(note.getBody());
-                }
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -127,9 +117,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
             @Override
             public void accept(SessionResponse sessionResponse) throws Exception {
                 session = sessionResponse.getData().getSession();
-                MainPresenter.this.getViewState().showMessage(session);
                 MainPresenter.this.getViewState().saveSession(session);
-                Log.d("rrrFromPresenter", session);
             }
         }, new Consumer<Throwable>() {
             @Override

@@ -1,7 +1,6 @@
 package com.kt.std.ipartnertest.model.repo;
 
 import com.kt.std.ipartnertest.model.api.ApiHolder;
-import com.kt.std.ipartnertest.model.entity.ListNotes;
 import com.kt.std.ipartnertest.model.entity.SessionResponse;
 
 import io.reactivex.Single;

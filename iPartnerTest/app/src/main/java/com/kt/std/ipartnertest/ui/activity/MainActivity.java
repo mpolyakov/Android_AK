@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kt.std.ipartnertest.App;
 import com.kt.std.ipartnertest.R;
 import com.kt.std.ipartnertest.model.repo.RequestBodyRepo;
 import com.kt.std.ipartnertest.presenter.MainPresenter;
@@ -30,13 +30,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
 
-    public RequestBody requestBody;
-    public MediaType mediaType;
     NotesRVAdapter adapter;
     private String session;
     public static final String APP_PREFERENCES = "app_settings";
@@ -71,17 +67,17 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     private void checkSessionLoadNotes() {
         if (mSettings.contains(APP_PREFERENCES_SESSION_ID)) {
             session = mSettings.getString(APP_PREFERENCES_SESSION_ID, "");
-            Log.d("rrrFromInit()", session);
-            Toast.makeText(this, session, Toast.LENGTH_SHORT).show();
         } else {
-            presenter.loadSession(getRequestBody("a=new_session"));
+            presenter.loadSession(RequestBodyRepo.getRequestBody("a=new_session"));
         }
-        presenter.loadNotes(getRequestBody("a=get_entries&session=" + session));
+        presenter.loadNotes(RequestBodyRepo.getRequestBody("a=get_entries&session=" + session));
     }
 
     @ProvidePresenter
     public MainPresenter createPresenter() {
-        return new MainPresenter(AndroidSchedulers.mainThread());
+        presenter = new MainPresenter(AndroidSchedulers.mainThread());
+        App.getInstance().getAppComponent().injectMain(presenter);
+        return presenter;
     }
 
     @Override
@@ -93,16 +89,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void saveSession(String sessionId) {
-//        Log.d("rrrFromSaveSession()", sessionId);
         SharedPreferences.Editor editor = mSettings.edit();
         editor.putString(APP_PREFERENCES_SESSION_ID, sessionId);
         editor.apply();
-    }
-
-    private RequestBody getRequestBody(String params) {
-        mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        requestBody = RequestBody.create(mediaType, params);
-        return requestBody;
     }
 
     @Override
@@ -170,6 +159,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         intent.putExtra("NOTE_BODY", body);
         startActivity(intent);
     }
+
+
 }
 
 

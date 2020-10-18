@@ -7,6 +7,8 @@ import com.kt.std.ipartnertest.model.entity.AddResponse;
 import com.kt.std.ipartnertest.model.repo.AddRepo;
 import com.kt.std.ipartnertest.view.NoteCreateView;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.functions.Consumer;
 import moxy.InjectViewState;
@@ -15,19 +17,19 @@ import okhttp3.RequestBody;
 
 @InjectViewState
 public class NoteCreatePresenter extends MvpPresenter<NoteCreateView> {
-    private AddRepo addRepo;
+
+    @Inject
+    AddRepo addRepo;
     private Scheduler mainThreadScheduler;
 
     public NoteCreatePresenter(Scheduler scheduler) {
         this.mainThreadScheduler = scheduler;
-        this.addRepo = new AddRepo();
     }
 
     @SuppressLint("CheckResult")
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().init();
     }
 
     @SuppressLint("CheckResult")

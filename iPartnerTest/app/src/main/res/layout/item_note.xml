@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="6dp">
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp">
 
         <TextView
-            android:textStyle="italic"
+            android:textStyle="italic|bold"
             android:id="@+id/tv_da"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:textSize="12sp"
             tools:text="Date created" />
 
         <TextView
-            android:textStyle="italic"
+            android:textStyle="italic|bold"
             android:id="@+id/tv_dm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:textSize="12sp"
+            android:layout_gravity="top|end"
             tools:text="Date modified" />
 
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/tv_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Body"
-        android:layout_gravity="left"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_gravity="left"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="16sp"
+        tools:text="Body" />
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

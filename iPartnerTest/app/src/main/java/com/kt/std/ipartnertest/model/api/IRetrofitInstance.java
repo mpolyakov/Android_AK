@@ -20,7 +20,6 @@ public interface IRetrofitInstance {
         Single<SessionResponse> getSession(@Body RequestBody body);
 
 
-
         @Headers({
                 "token: x916w01-mf-K2AODSh"
                 ,"Content-Type: application/x-www-form-urlencoded"

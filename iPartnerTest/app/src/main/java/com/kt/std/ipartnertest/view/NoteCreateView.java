@@ -7,6 +7,5 @@ import moxy.viewstate.strategy.StateStrategyType;
 @StateStrategyType(value = OneExecutionStateStrategy.class)
 public interface NoteCreateView extends MvpView {
     void saveNote();
-    void init();
     void showMessage(String text);
 }
