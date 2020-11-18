@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AccessibilityServiceEx</string>
+    <string name="accessibility_service_label">Insta акцессибилити сервис</string>
+    <string name="accessibility_service_description">Этот сервис очень-очень-очень важен</string>
+    <string name="accessibilityservice_id">com.kt.std.accessibilityserviceex/.MyAccessibilityService</string>
+    <string name="launch_instagram">Старт</string>
+    <string name="login">login</string>
+</resources>
